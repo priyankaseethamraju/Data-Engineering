@@ -71,7 +71,7 @@ if __name__ == '__main__':
         record_key = "ctran-event"
         try:
          for datapoint in ctran_data:
-           record_value = json.dumps(ctran_data)
+           record_value = json.dumps(datapoint)
            print("Producing record: {}\t{}".format(record_key, record_value))
            producer.produce(topic, key=record_key, value=record_value, on_delivery=acked)
            # p.poll() serves delivery reports (on_delivery)
