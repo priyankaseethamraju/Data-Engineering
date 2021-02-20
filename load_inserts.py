@@ -7,10 +7,13 @@ import argparse
 import re
 import csv
 
-DBname = "storact"
-DBuser = "sauser"
-DBpwd = "hello"
-TableName = 'CensusData'
+
+
+DBname = "censusdata"
+DBuser = "priya"
+DBpwd = "priya"
+
+TableName = 'CensusData2015'
 Datafile = "filedoesnotexist"  # name of the data file to be loaded
 CreateDB = False  # indicates whether the DB table should be (re)-created
 Year = 2015
@@ -22,7 +25,8 @@ def row2vals(row):
 			row[key] = 0
 		row['County'] = row['County'].replace('\'','')  # eliminate quotes within literals
 
-	ret = f"""
+
+	ret = f""" 
        {Year},                          -- Year
        {row['CensusTract']},            -- CensusTract
        '{row['State']}',                -- State
@@ -100,6 +104,7 @@ def getSQLcmnds(rowlist):
 	cmdlist = []
 	for row in rowlist:
 		valstr = row2vals(row)
+
 		cmd = f"INSERT INTO {TableName} VALUES ({valstr});"
 		cmdlist.append(cmd)
 	return cmdlist
@@ -108,9 +113,13 @@ def getSQLcmnds(rowlist):
 def dbconnect():
 	connection = psycopg2.connect(
         host="localhost",
-        database=DBname,
+
+
+        database=DBname, 
         user=DBuser,
-        password=DBpwd,
+
+
+        password=DBpwd 
 	)
 	connection.autocommit = True
 	return connection
@@ -121,8 +130,13 @@ def createTable(conn):
 
 	with conn.cursor() as cursor:
 		cursor.execute(f"""
-        	DROP TABLE IF EXISTS {TableName};
-        	CREATE TABLE {TableName} (
+        	DROP TABLE IF EXISTS {CensusData2015};
+
+
+
+
+
+        	CREATE TABLE CensusData2015(
             	Year                INTEGER,
               CensusTract         NUMERIC,
             	State               TEXT,
