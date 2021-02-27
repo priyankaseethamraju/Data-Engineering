@@ -121,7 +121,7 @@ def dbconnect():
 
         password=DBpwd 
 	)
-	connection.autocommit = True
+	connection.autocommit = False
 	return connection
 
 # create the target table 
@@ -136,7 +136,7 @@ def createTable(conn):
 
 
 
-        	CREATE TABLE CensusData2015(
+        	CREATE UNLOGGED TABLE CensusData2015(
             	Year                INTEGER,
               CensusTract         NUMERIC,
             	State               TEXT,
@@ -176,8 +176,8 @@ def createTable(conn):
             	FamilyWork          DECIMAL,
             	Unemployment        DECIMAL
          	);	
-         	ALTER TABLE {TableName} ADD PRIMARY KEY (Year, CensusTract);
-         	CREATE INDEX idx_{TableName}_State ON {TableName}(State);
+         	
+         
     	""")
 
 		print(f"Created {TableName}")

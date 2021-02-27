@@ -176,8 +176,8 @@ def createTable(conn):
             	FamilyWork          DECIMAL,
             	Unemployment        DECIMAL
          	);	
-         	ALTER TABLE {TableName} ADD PRIMARY KEY (Year, CensusTract);
-         	CREATE INDEX idx_{TableName}_State ON {TableName}(State);
+         	
+         
     	""")
 
 		print(f"Created {TableName}")
