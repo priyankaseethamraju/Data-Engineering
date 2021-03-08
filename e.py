@@ -81,13 +81,13 @@ def createTable(conn):
 
 
 
-        with conn.cursor() as cursor:
+
                 cursor.execute(f"""
 
                 DROP TABLE IF EXISTS breadcrumb ;
                 CREATE UNLOGGED TABLE breadcrumb(
 
-                tstamp        INTEGER,
+                tstamp        TIMESTAMP,
 
 
                 latitude          FLOAT ,
@@ -270,6 +270,19 @@ def validate_trip_df(df):
 
    df['DIRECTION'][i] = None
 
+
+def actTime(df,i):
+
+
+  for i in range(len(df['ACT_TIME'])):
+   time=int(df['ACT_TIME'][i])
+   time=(str(datetime.timedelta(seconds=time)))
+   date=df['OPD_DATE'][i]
+   date +=' ' + time
+   date=datetime.datetime.strptime(date, '%d-%b-%y %H:%M:%S')
+   return date 
+
+
 def load(input):
 
 
@@ -311,6 +324,9 @@ def load(input):
 
 
    service_key.append(serviceKey(df,i))
+  act_time =[]
+  for i in range(len(df)):
+   act_time.append(actTime(df,i))
 
 
 
@@ -336,6 +352,7 @@ def load(input):
   df["ROUTE_ID"] = route_id
   df['SERVICE_KEY'] = service_key
 
+  df['ACT_TIME'] = act_time
 
   columns_1 = df[["ACT_TIME","GPS_LATITUDE","GPS_LONGITUDE","DIRECTION","VELOCITY","EVENT_NO_TRIP"]]
 
