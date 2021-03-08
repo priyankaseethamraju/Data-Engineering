@@ -20,34 +20,6 @@ CreateDB = False  # indicates whether the DB table should be (re)-created
 
 def createTable(conn):
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-
-
-
-
-
         with conn.cursor() as cursor:
                 cursor.execute(f"""
                 DROP TABLE IF EXISTS trip;
@@ -70,17 +42,9 @@ def createTable(conn):
 
 
 
-
-
-
         """)
 
                 print(f"Created {TableName}")
-
-
-
-
-
 
                 cursor.execute(f"""
 
@@ -99,91 +63,7 @@ def createTable(conn):
                 );
 
 
-
-
-
-
-
         """)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def dbconnect():
@@ -285,66 +165,18 @@ def actTime(df,i):
 
 def load(input):
 
-
-
-
   with open('a.json','w') as file:
     json.dump(input,file)
 
   df = pd.read_json('a.json') 
-  
-
   conn = dbconnect()
-
-
-
-
   createTable(conn)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   service_key = []
   for i in range(len(df)):
-
-
    service_key.append(serviceKey(df,i))
   act_time =[]
   for i in range(len(df)):
    act_time.append(actTime(df,i))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   
   route_id = 0
@@ -356,12 +188,7 @@ def load(input):
 
   columns_1 = df[["ACT_TIME","GPS_LATITUDE","GPS_LONGITUDE","DIRECTION","VELOCITY","EVENT_NO_TRIP"]]
 
-
-
-
-
   columns_2 = df[["EVENT_NO_TRIP","ROUTE_ID","VEHICLE_ID","SERVICE_KEY","DIRECTION"]]
-
 
   breadcrumb_df = columns_1.copy()
   print(breadcrumb_df.head(10))
@@ -374,30 +201,17 @@ def load(input):
 
   validate_trip_df(trip_df) 
 
-
-
-
-
-
-
   breadcrumb_df.rename(columns = {'ACT_TIME':'tstamp','GPS_LATITUDE':'latitude','GPS_LONGITUDE':'longitude','DIRECTION':'direction','VELOCITY':'speed','EVENT_NO_TRIP':'trip_id'},inplace=True)
-
-
 
   trip_df.rename(columns = {'EVENT_NO_TRIP':'trip_id','ROUTE_ID':'route_id','VEHICLE_ID':'vehicle_id','SERVICE_KEY':'service_key','DIRECTION':'direction'},inplace=True)
   
   print(trip_df.head(10))
 
-
-
   breadcrumb_df.to_sql('breadcrumb',engine,if_exists='append',index=False)
 
   trip_df.to_sql('trip',engine,if_exists='append',index=False)
 
-
-
   cursorObj = conn.cursor()
-
 
   cursorObj.execute('select * from breadcrumb;')
 
@@ -408,94 +222,4 @@ def load(input):
 
   print('Total insertions in trip table:',len(cursorObj.fetchall()))
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
