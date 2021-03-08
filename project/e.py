@@ -41,7 +41,6 @@ def createTable(conn):
                 );
 
 
-
         """)
 
                 print(f"Created {TableName}")
